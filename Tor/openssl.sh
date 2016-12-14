@@ -18,7 +18,7 @@ fi
 
 # If rebuilding or cleaning then delete the built products
 if [[ $ACTION = "clean" ]] || [[ $REBUILD = 1 ]]; then
-    make distclean 2>/dev/null
+    make dclean 2>/dev/null
     rm -r "${BUILT_PRODUCTS_DIR}/openssl-"* 2>/dev/null
     rm "${BUILT_PRODUCTS_DIR}/libssl.a" 2>/dev/null
     rm "${BUILT_PRODUCTS_DIR}/libcrypto.a" 2>/dev/null
@@ -41,19 +41,20 @@ do
     export CROSS_TOP="${SDK_COMPONENTS[0]}"
     export CROSS_SDK="${SDK_COMPONENTS[1]}"
     export CC="$(xcrun -f --sdk ${PLATFORM_NAME} clang) -arch ${ARCH} ${BITCODE_FLAGS}"
+    mkdir -p "${CONFIGURATION_TEMP_DIR}/openssl-${ARCH}"
+
     if [[ "${ARCH}" == "i386" ]]; then
         ./Configure no-shared no-asm --prefix="${CONFIGURATION_TEMP_DIR}/openssl-${ARCH}" darwin-i386-cc
     elif [[ "${ARCH}" == "x86_64" ]]; then
         ./Configure no-shared no-asm enable-ec_nistp_64_gcc_128 --prefix="${CONFIGURATION_TEMP_DIR}/openssl-${ARCH}" darwin64-x86_64-cc
     elif [[ "${ARCH}" == "arm64" ]]; then
-        ./Configure no-shared no-async zlib-dynamic enable-ec_nistp_64_gcc_128 --prefix="${CONFIGURATION_TEMP_DIR}/openssl-${ARCH}" ios64-cross
+        ./Configure no-shared no-async zlib-dynamic enable-ec_nistp_64_gcc_128 --prefix="${CONFIGURATION_TEMP_DIR}/openssl-${ARCH}" iphoneos-cross
     else
-        ./Configure no-shared no-async zlib-dynamic --prefix="${CONFIGURATION_TEMP_DIR}/openssl-${ARCH}" ios-cross
+        ./Configure no-shared no-async zlib-dynamic --prefix="${CONFIGURATION_TEMP_DIR}/openssl-${ARCH}" iphoneos-cross
     fi
-    make depend
-    make -j$(sysctl hw.ncpu | awk '{print $2}') build_libs
-    make install_dev
-    make distclean
+    make -j$(sysctl hw.ncpu | awk '{print $2}')
+    make install_sw
+    make clean
 done
 
 mkdir -p "${BUILT_PRODUCTS_DIR}"
