@@ -58,7 +58,7 @@ cp -f "$(xcrun --sdk macosx --show-sdk-path)/usr/include/xpc/base.h" "${XPC_INCL
 for ARCH in "${ARCHS[@]}"
 do
     PREFIX="${CONFIGURATION_TEMP_DIR}/libevent-${ARCH}"
-    ./configure --disable-shared --enable-static --disable-debug-mode --enable-gcc-hardening --prefix="${PREFIX}" CC="$(xcrun -f --sdk ${PLATFORM_NAME} clang) -arch ${ARCH}" CPP="$(xcrun -f --sdk ${PLATFORM_NAME} clang) -E -arch ${ARCH}" CFLAGS="-I${BUILT_PRODUCTS_DIR}/openssl-${ARCH} -I\"${SRCROOT}/Tor/openssl/include\" ${BITCODE_FLAGS} -I${XPC_INCLUDE_DIR}" LDFLAGS="-L${BUILT_PRODUCTS_DIR} ${BITCODE_FLAGS}" cross_compiling="yes" ac_cv_func_clock_gettime="no"
+    ./configure --disable-shared --enable-static --disable-debug-mode --disable-samples --disable-libevent-regress --enable-gcc-hardening --prefix="${PREFIX}" CC="$(xcrun -f --sdk ${PLATFORM_NAME} clang) -arch ${ARCH}" CPP="$(xcrun -f --sdk ${PLATFORM_NAME} clang) -E -arch ${ARCH}" CFLAGS="-I${BUILT_PRODUCTS_DIR}/openssl-${ARCH} -I\"${SRCROOT}/Tor/openssl/include\" ${BITCODE_FLAGS} -I${XPC_INCLUDE_DIR}" LDFLAGS="-L${BUILT_PRODUCTS_DIR} ${BITCODE_FLAGS}" cross_compiling="yes" ac_cv_func_clock_gettime="no"
     make -j$(sysctl hw.ncpu | awk '{print $2}')
     make install
     make distclean
