@@ -8,7 +8,7 @@ Currently, the framework compiles in static versions of `tor`, `libevent` and `o
 
 |          |               |
 |:-------- | -------------:|
-| tor      | 0.3.0.7       |
+| tor      | 0.3.0.8       |
 | libevent | 2.1.8         |
 | OpenSSL  | 1.0.2l        |
 
