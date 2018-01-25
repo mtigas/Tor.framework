@@ -15,6 +15,9 @@ TOR_EXTERN NSErrorDomain const TORControllerErrorDomain;
 TOR_EXTERN NSString * const TORControllerErrorDomain;
 #endif
 
+typedef BOOL (^TORObserverBlock)(NSArray<NSNumber *> *codes, NSArray<NSData *> *lines, BOOL *stop);
+
+
 NS_SWIFT_NAME(TorController)
 @interface TORController : NSObject
 
@@ -29,6 +32,7 @@ NS_SWIFT_NAME(TorController)
 
 // Commands
 - (void)authenticateWithData:(NSData *)data completion:(void (^__nullable)(BOOL success, NSError * __nullable error))completion;
+- (void)sendCommand:(NSString *)command arguments:(nullable NSArray<NSString *> *)arguments data:(nullable NSData *)data observer:(TORObserverBlock)observer;
 - (void)resetConfForKey:(NSString *)key completion:(void (^__nullable)(BOOL success, NSError * __nullable error))completion;
 - (void)setConfForKey:(NSString *)key withValue:(NSString *)value completion:(void (^__nullable)(BOOL success, NSError * __nullable error))completion;
 - (void)setConfs:(NSArray<NSDictionary *> *)configs completion:(void (^__nullable)(BOOL success, NSError * __nullable error))completion;
