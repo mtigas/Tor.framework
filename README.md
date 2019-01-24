@@ -8,10 +8,10 @@ Currently, the framework compiles in static versions of `tor`, `libevent`, `open
 
 |          |         |
 |:-------- | -------:|
-| tor      | 0.3.5.2-alpha |
+| tor      | 0.4.0.1-alpha |
 | libevent | 2.1.8   |
-| OpenSSL  | 1.0.1i  |
-| liblzma  | 5.2.3   |
+| OpenSSL  | 1.0.2q |
+| liblzma  | 5.2.4   |
 
 ## Requirements
 
