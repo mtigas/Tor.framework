@@ -8,7 +8,14 @@ PATH=$PATH:/usr/local/bin:/usr/local/opt/gettext/bin
 
 # Generate the configure script (necessary for version control distributions)
 if [[ ! -f ./configure ]]; then
-    LIBTOOLIZE=glibtoolize
+    if command -v "glibtoolize" > /dev/null; then
+        LIBTOOLIZE=glibtoolize
+    elif command -v "libtoolize" > /dev/null; then
+        LIBTOOLIZE=libtoolize
+    else
+        echo "DIST: line $LINENO: command libtoolize or glibtoolize not found"
+        exit 1
+    fi
     ./autogen.sh
 fi
 

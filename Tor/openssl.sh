@@ -36,8 +36,8 @@ fi
 
 if [[ "${CONFIGURATION}" = "Debug" ]]; then
     DEBUG_FLAGS="--debug"
-else
-    DEBUG_FLAGS="--release"
+#else
+#    DEBUG_FLAGS="--release"
 fi
 
 # Build each architecture one by one using clang
